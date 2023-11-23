@@ -1,0 +1,15 @@
+{
+  "name": "@laboralphy/object-fusion",
+  "version": "1.0.0",
+  "description": "Tools for recursively cloning and merging objects",
+  "main": "index.js",
+  "scripts": {
+    "test": "jasmine tests/*Test.js"
+  },
+  "keywords": ["merge", "clone", "recursive"],
+  "author": "laboralphy",
+  "license": "ISC",
+  "devDependencies": {
+    "jasmine": "^5.1.0"
+  }
+}
