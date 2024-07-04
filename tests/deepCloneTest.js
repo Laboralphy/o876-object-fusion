@@ -53,3 +53,57 @@ describe('#deepMerge', function () {
     })
   })
 })
+
+describe('using transformation function', function () {
+  it('should transform all values in uppercase when using transformation function', function () {
+    const oSource = {
+      test1: 'alpha',
+      test2: ['beta', 'gamma', 'delta'],
+      test3: {
+        t30: 'eta',
+        t31: {
+          t310: 'theta',
+          t311: 'iota',
+          t312: 'kappa'
+        },
+        t32: [
+          {
+            t32x1: 'lambda',
+            t32x2: 'mu',
+            t32x3: 'nu'
+          },
+          {
+            t32y1: 'pi',
+            t32y2: 'rho',
+            t32y3: 'sigma'
+          }
+        ]
+      }
+    }
+    const oExpected = {
+      test1: 'ALPHA',
+      test2: ['BETA', 'GAMMA', 'DELTA'],
+      test3: {
+        t30: 'ETA',
+        t31: {
+          t310: 'THETA',
+          t311: 'IOTA',
+          t312: 'KAPPA'
+        },
+        t32: [
+          {
+            t32x1: 'LAMBDA',
+            t32x2: 'MU',
+            t32x3: 'NU'
+          },
+          {
+            t32y1: 'PI',
+            t32y2: 'RHO',
+            t32y3: 'SIGMA'
+          }
+        ]
+      }
+    }
+    expect(deepClone(oSource, x => x.toUpperCase())).toEqual(oExpected)
+  })
+})
