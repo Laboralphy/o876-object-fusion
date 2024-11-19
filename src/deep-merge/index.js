@@ -1,4 +1,4 @@
-const deepClone = require('../deep-clone')
+const { deepClone } = require('../deep-clone')
 
 /**
  * Simple object check.
@@ -43,4 +43,6 @@ function mergeDeep (target, source, aRecurs = []) {
   return target
 }
 
-module.exports = mergeDeep
+module.exports = {
+  deepMerge: mergeDeep
+}

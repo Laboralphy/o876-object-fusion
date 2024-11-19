@@ -5,7 +5,7 @@
  * @param f {function}
  * @returns {{[p: string]: *}}
  */
-function main (oObject, f) {
+function shallowMap (oObject, f) {
     return Object.fromEntries(
         Object
             .entries(oObject)
@@ -13,4 +13,6 @@ function main (oObject, f) {
     )
 }
 
-module.exports = main
+module.exports = {
+    shallowMap
+}

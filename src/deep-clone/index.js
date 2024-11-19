@@ -41,4 +41,6 @@ function cloneItem (oItem, fTransformFunction = null) {
   }
 }
 
-module.exports = cloneItem
+module.exports = {
+  deepClone: cloneItem
+}
