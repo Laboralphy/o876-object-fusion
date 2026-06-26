@@ -1,0 +1,5 @@
+export { deepClone, type TransformFunction } from './deep-clone/index.js'
+export { deepMerge } from './deep-merge/index.js'
+export { shallowMap } from './shallow-map/index.js'
+export { deepFreeze, type DeepReadonly } from './deep-freeze/index.js'
+export { deepEqual } from './deep-equal/index.js'

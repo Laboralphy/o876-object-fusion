@@ -1,7 +1,8 @@
-const { deepClone, deepMerge } = require('../index')
+import { describe, it, expect } from 'vitest'
+import { deepClone, deepMerge } from '../src/index'
 
-describe('#deepClone', function () {
-  it('les objets doivent être identique', function () {
+describe('#deepClone', () => {
+  it('les objets doivent être identique', () => {
     const oSource = {
       alpha: {
         x: 20,
@@ -20,9 +21,9 @@ describe('#deepClone', function () {
   })
 })
 
-describe('#deepMerge', function () {
-  it('les objets doivent être fusionnés', function () {
-    const oSource = {
+describe('#deepMerge', () => {
+  it('les objets doivent être fusionnés', () => {
+    const oSource: Record<string, any> = {
       alpha: {
         x: 20,
         nom: 'zeratul',
@@ -45,17 +46,17 @@ describe('#deepMerge', function () {
       alpha: {
         x: 25,
         nom: 'zeratul',
-        liste: [ 'jan', 'fev', 'avr', { f: 3, d: 9.9, e: Infinity, tuple: [true, false] }, 'mar', { d: 9.55, xx: 100 }]
+        liste: ['jan', 'fev', 'avr', { f: 3, d: 9.9, e: Infinity, tuple: [true, false] }, 'mar', { d: 9.55, xx: 100 }]
       },
-      beta: [ 9, 5, 1.1, 5 ],
+      beta: [9, 5, 1.1, 5],
       gamma: 'zozozo',
       delta: 'hhhh'
     })
   })
 })
 
-describe('using transformation function', function () {
-  it('should transform all values in uppercase when using transformation function', function () {
+describe('using transformation function', () => {
+  it('should transform all values in uppercase when using transformation function', () => {
     const oSource = {
       test1: 'alpha',
       test2: ['beta', 'gamma', 'delta'],
@@ -104,6 +105,6 @@ describe('using transformation function', function () {
         ]
       }
     }
-    expect(deepClone(oSource, x => x.toUpperCase())).toEqual(oExpected)
+    expect(deepClone(oSource, x => (x as string).toUpperCase())).toEqual(oExpected)
   })
 })
