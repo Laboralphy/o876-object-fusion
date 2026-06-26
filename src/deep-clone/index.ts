@@ -18,10 +18,10 @@ function cloneObject (
 }
 
 /**
- * Recursively clones any value. Plain objects, arrays, Date and Set instances are
- * duplicated; primitives (and functions) are returned as-is unless a transformation
- * function is provided, in which case it receives every leaf value and returns the
- * replacement to store in the clone.
+ * Recursively clones any value. Plain objects, arrays, Date, Set and Map instances
+ * are duplicated; primitives (and functions) are returned as-is unless a transformation
+ * function is provided, in which case it receives every leaf value (including Set
+ * elements and Map keys/values) and returns the replacement to store in the clone.
  * @param oItem value to clone
  * @param fTransformFunction optional leaf-value transformer
  * @returns a deep clone of oItem
@@ -36,7 +36,14 @@ function cloneItem<T> (oItem: T, fTransformFunction: TransformFunction | null = 
       } else if (oItem instanceof Date) {
         return new Date(oItem) as T
       } else if (oItem instanceof Set) {
-        return new Set(cloneArray([...oItem])) as T
+        return new Set(cloneArray([...oItem], fTransformFunction)) as T
+      } else if (oItem instanceof Map) {
+        return new Map(
+          [...oItem].map(([key, value]) => [
+            cloneItem(key, fTransformFunction),
+            cloneItem(value, fTransformFunction)
+          ])
+        ) as T
       } else {
         return cloneObject(oItem as Record<string, unknown>, fTransformFunction) as T
       }

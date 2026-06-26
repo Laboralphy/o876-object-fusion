@@ -21,6 +21,52 @@ describe('#deepClone', () => {
   })
 })
 
+describe('#deepClone Set', () => {
+  it('should clone a Set into a new independent Set', () => {
+    const inner = { a: 1 }
+    const oSource = new Set<unknown>([1, 'two', inner])
+    const oTarget = deepClone(oSource)
+    expect(oTarget).toBeInstanceOf(Set)
+    expect(oTarget).not.toBe(oSource)
+    expect([...oTarget]).toEqual([1, 'two', { a: 1 }])
+    // nested object members are deep-cloned, not shared
+    expect([...oTarget][2]).not.toBe(inner)
+  })
+
+  it('should apply the transform function to Set members', () => {
+    const oSource = new Set(['alpha', 'beta'])
+    const oTarget = deepClone(oSource, x => (x as string).toUpperCase())
+    expect([...oTarget]).toEqual(['ALPHA', 'BETA'])
+  })
+})
+
+describe('#deepClone Map', () => {
+  it('should clone a Map into a new independent Map', () => {
+    const innerKey = { k: 1 }
+    const innerVal = { v: 2 }
+    const oSource = new Map<unknown, unknown>([
+      ['plain', 10],
+      [innerKey, innerVal]
+    ])
+    const oTarget = deepClone(oSource)
+    expect(oTarget).toBeInstanceOf(Map)
+    expect(oTarget).not.toBe(oSource)
+    expect(oTarget.get('plain')).toBe(10)
+    // keys and values are deep-cloned
+    const clonedEntry = [...oTarget].find(([k]) => k !== 'plain')!
+    expect(clonedEntry[0]).toEqual(innerKey)
+    expect(clonedEntry[0]).not.toBe(innerKey)
+    expect(clonedEntry[1]).toEqual(innerVal)
+    expect(clonedEntry[1]).not.toBe(innerVal)
+  })
+
+  it('should apply the transform function to Map keys and values', () => {
+    const oSource = new Map([['a', 'x'], ['b', 'y']])
+    const oTarget = deepClone(oSource, v => (v as string).toUpperCase())
+    expect([...oTarget]).toEqual([['A', 'X'], ['B', 'Y']])
+  })
+})
+
 describe('#deepMerge', () => {
   it('les objets doivent être fusionnés', () => {
     const oSource: Record<string, any> = {
